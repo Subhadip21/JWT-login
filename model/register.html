@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Registration Page</title>
+    </head>
+    <body>
+        <h1>Registration</h1>
+        <form id="reg-form">
+            <input type="text" autocomplete="off" id="username" placeholder="Username"><br><br>
+            <input type="password" autocomplete="off" id="password" placeholder="Password"><br><br>
+            <input type="submit" value="Submit Form"/><br><br>
+            <a href="login.html">Already have account? Login here</a>
+        </form>
+        <script>
+            const form = document.getElementById('reg-form')
+            form.addEventListener('submit',registerUser)
+
+            async function registerUser(event){
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                const result = await fetch('/api/register',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                }).then((res)=> res.json())
+
+                if(result.status === 'ok'){
+                    document.write("Successfully Registered")
+                }else{
+                    document.write("Something went wrong")
+                }
+            }
+        </script>
+    </body>
+</html>
